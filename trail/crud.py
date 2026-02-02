@@ -1,21 +1,16 @@
 from sqlalchemy.orm import Session
-import models, schemas
+from trail import models, schemas
 
-# Sessions manage database connections and transactions
+
 
 def fetch_employees(db: Session):
 
     return db.query(models.Employee).all()
 
 
-def fetch_employee(db:Session, emp_id: int):
+def fetch_employee(db: Session, emp_id: int):
 
-    return (
-        db
-        .query(models.Employee)
-        .filter(models.Employee.id == emp_id)
-        .first()
-    )
+    return db.query(models.Employee).filter(models.Employee.id == emp_id).first()
 
 
 def create_employee(db: Session, employee: schemas.EmployeeCreate):
@@ -32,11 +27,12 @@ def create_employee(db: Session, employee: schemas.EmployeeCreate):
     return db_employee
 
 
-def update_employee(db:Session, emp_id: int, employee: schemas.EmployeeUpdate):
+def update_mployee(db: Session, emp_id: int, employee: schemas.EmployeeUpdate):
 
     db_employee = db.query(models.Employee).filter(models.Employee.id == emp_id).first()
 
     if db_employee:
+        
         db_employee.name = employee.name
         db_employee.email = employee.email
 
@@ -46,14 +42,15 @@ def update_employee(db:Session, emp_id: int, employee: schemas.EmployeeUpdate):
     return db_employee
 
 
-def delete_employee(db:Session, emp_id: int):
-    
+def delete_employee(db: Session, emp_id: int):
+
     db_employee = db.query(models.Employee).filter(models.Employee.id == emp_id).first()
 
     if db_employee:
-        
         db.delete(db_employee)
 
         db.commit()
 
     return db_employee
+
+

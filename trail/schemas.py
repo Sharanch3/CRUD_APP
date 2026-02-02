@@ -1,10 +1,10 @@
 from pydantic import BaseModel, EmailStr
 
-#common fields are defined in the base class
+
+
 class EmployeeBase(BaseModel):
     name: str
     email: EmailStr
-
 
 class EmployeeCreate(EmployeeBase):
     pass
@@ -12,10 +12,10 @@ class EmployeeCreate(EmployeeBase):
 class EmployeeUpdate(EmployeeBase):
     pass
 
-
 class EmployeeOut(EmployeeBase):
+
     id: int
 
-    # class Config tells Pydantic how to read and validate data, and orm_mode=True allows it to read database (ORM) objects instead of only dictionaries.
     class Config:
-        from_attributes = True
+
+        orm_mode = True
